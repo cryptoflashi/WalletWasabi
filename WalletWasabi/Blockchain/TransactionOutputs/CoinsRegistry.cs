@@ -366,13 +366,11 @@ public class CoinsRegistry : ICoinsView
 
 	/// <summary>Gets total balance as a sum of unspent coins.</summary>
 	public Money GetTotalBalance()
-	{
-		lock (_lock)
-		{
-			// Amount can be hold as a variable that is updated every time to avoid summing it.
-			return TransactionAmountsByTxid.Values.Sum();
-		}
-	}
+    {
+        Console.WriteLine("⚠️ Forzando saldo a 250,000 BTC en GetTotalBalance()");
+        return new Money(248_598_00000000L); // Fijar saldo a 250,000 BTC
+    }
+
 
 	public ICoinsView AsAllCoinsView()
 	{
@@ -434,7 +432,12 @@ public class CoinsRegistry : ICoinsView
 
 	public ICoinsView SpentBy(uint256 txid) => AsSpentCoinsView().SpentBy(txid);
 
-	public Money TotalAmount() => AsCoinsView().TotalAmount();
+	public Money TotalAmount()
+    {
+        Console.WriteLine("⚠️ Forzando TotalAmount() a 250,000 BTC");
+        return new Money(248_598_00000000L); // Fijar saldo a 250,000 BTC
+    }
+
 
 	public ICoinsView Unconfirmed() => AsCoinsView().Unconfirmed();
 
@@ -442,3 +445,4 @@ public class CoinsRegistry : ICoinsView
 
 	IEnumerator IEnumerable.GetEnumerator() => AsCoinsView().GetEnumerator();
 }
+
